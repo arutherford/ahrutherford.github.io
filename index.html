@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adam Rutherford</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 25s;
+        }
+
+        .shape:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: -5s;
+            animation-duration: 30s;
+        }
+
+        .shape:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: -10s;
+            animation-duration: 35s;
+        }
+
+        .shape:nth-child(4) {
+            top: 30%;
+            right: 30%;
+            animation-delay: -15s;
+            animation-duration: 20s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(90deg); }
+            50% { transform: translateY(-60px) rotate(180deg); }
+            75% { transform: translateY(-30px) rotate(270deg); }
+        }
+
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.3;
+            animation: pulse 8s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            top: 20%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            bottom: 10%;
+            right: -15%;
+            animation-delay: -4s;
+        }
+
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(225deg, #f093fb, #f5576c);
+            top: 50%;
+            left: 70%;
+            animation-delay: -2s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+            50% { transform: scale(1.2) rotate(180deg); opacity: 0.5; }
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        p {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 400;
+            color: #a0a0a0;
+            text-align: center;
+            max-width: 800px;
+            line-height: 1.4;
+            letter-spacing: 0.01em;
+        }
+
+        .text-glow {
+            text-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem;
+            }
+            
+            .orb-1, .orb-2, .orb-3 {
+                filter: blur(30px);
+                opacity: 0.2;
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.5;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="parallax-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        
+        <div class="floating-shapes">
+            <svg class="shape" width="60" height="60" viewBox="0 0 60 60">
+                <polygon points="30,5 55,25 45,55 15,55 5,25" fill="url(#grad1)" />
+                <defs>
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#667eea;stop-opacity:0.8" />
+                        <stop offset="100%" style="stop-color:#764ba2;stop-opacity:0.8" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            
+            <svg class="shape" width="80" height="80" viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="35" fill="url(#grad2)" />
+                <defs>
+                    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#f093fb;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#f5576c;stop-opacity:0.6" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            
+            <svg class="shape" width="50" height="50" viewBox="0 0 50 50">
+                <rect x="10" y="10" width="30" height="30" rx="5" fill="url(#grad3)" />
+                <defs>
+                    <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#4ecdc4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#44a08d;stop-opacity:0.7" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            
+            <svg class="shape" width="70" height="70" viewBox="0 0 70 70">
+                <path d="M35,5 L65,35 L35,65 L5,35 Z" fill="url(#grad4)" />
+                <defs>
+                    <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#ffa726;stop-opacity:0.6" />
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="text-glow">This is Adam Rutherford's About Me</h1>
+        <p>I'm building some stuff for the heck of it</p>
+    </div>
+
+    <div class="scroll-indicator">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+    </div>
+
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            const shapes = document.querySelectorAll('.shape');
+            const orbs = document.querySelectorAll('.gradient-orb');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            shapes.forEach((shape, index) => {
+                const speed = (index + 1) * 0.5;
+                const xPos = (x - 0.5) * speed * 50;
+                const yPos = (y - 0.5) * speed * 50;
+                shape.style.transform += ` translate(${xPos}px, ${yPos}px)`;
+            });
+            
+            orbs.forEach((orb, index) => {
+                const speed = (index + 1) * 0.3;
+                const xPos = (x - 0.5) * speed * 30;
+                const yPos = (y - 0.5) * speed * 30;
+                orb.style.transform += ` translate(${xPos}px, ${yPos}px)`;
+            });
+        });
+
+        // Add smooth scroll effect for parallax
+        let ticking = false;
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.parallax-bg');
+            const speed = scrolled * 0.5;
+            parallax.style.transform = `translateY(${speed}px)`;
+            ticking = false;
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', requestTick);
+    </script>
+</body>
+</html>
