@@ -74,13 +74,13 @@
 
         .random-adverb {
             position: fixed;
-            font-size: 1.5rem;
+            font-size: clamp(0.6rem, 1.5vw, 0.9rem);
             font-weight: 300;
             color: #64748b;
             pointer-events: none;
             z-index: 10;
             opacity: 0;
-            transition: opacity 1.5s ease-in-out;
+            transition: opacity 0.5s ease-in-out;
         }
 
         .random-adverb.fade-in {
@@ -231,26 +231,29 @@
             element.className = 'random-adverb';
             element.textContent = adverb;
             
-            // Random position on screen
-            const x = Math.random() * (window.innerWidth - 200) + 100;
-            const y = Math.random() * (window.innerHeight - 100) + 50;
+            // Random position within viewport bounds
+            const maxWidth = window.innerWidth - 150; // account for word width
+            const maxHeight = window.innerHeight - 50; // account for word height
+            const x = Math.random() * Math.max(0, maxWidth);
+            const y = Math.random() * Math.max(0, maxHeight);
             element.style.left = x + 'px';
             element.style.top = y + 'px';
             
             document.body.appendChild(element);
             
-            // Fade in
+            // Fade in (0.5s)
             setTimeout(() => element.classList.add('fade-in'), 50);
             
-            // Fade out and remove
+            // Fade out after 2.5s total (0.5s fade in + 2s display)
             setTimeout(() => {
                 element.classList.remove('fade-in');
-                setTimeout(() => element.remove(), 1500);
-            }, 1500);
+                // Remove after fade out completes (0.5s)
+                setTimeout(() => element.remove(), 500);
+            }, 2500);
         }
 
         function scheduleNextAdverb() {
-            const delay = (Math.random() * 80 + 10) * 1000; // 10-90 seconds
+            const delay = (Math.random() * 2 + 2) * 1000; // 2-4 seconds
             setTimeout(() => {
                 showRandomAdverb();
                 scheduleNextAdverb();
