@@ -127,7 +127,7 @@
             </style>
         `);
 
-        // Random adverb system
+        // Random adverb and verb system
         const adverbs = [
             'quietly', 'boldly', 'mysteriously', 'gracefully', 'suddenly',
             'smoothly', 'carefully', 'playfully', 'gently', 'swiftly',
@@ -229,11 +229,81 @@
             'determinedly', 'resolutely', 'firmly', 'steadfastly', 'unwavering'
         ];
 
+        const verbs = [
+            'mowing', 'dancing', 'cooking', 'reading', 'writing', 'singing', 'jumping', 'running',
+            'walking', 'swimming', 'flying', 'driving', 'painting', 'drawing', 'sculpting', 'carving',
+            'building', 'constructing', 'demolishing', 'repairing', 'fixing', 'breaking', 'assembling', 'disassembling',
+            'cleaning', 'washing', 'scrubbing', 'polishing', 'dusting', 'vacuuming', 'sweeping', 'mopping',
+            'gardening', 'planting', 'watering', 'pruning', 'harvesting', 'digging', 'raking', 'composting',
+            'fishing', 'hunting', 'camping', 'hiking', 'climbing', 'skiing', 'snowboarding', 'surfing',
+            'sailing', 'rowing', 'paddling', 'kayaking', 'canoeing', 'rafting', 'diving', 'snorkeling',
+            'sleeping', 'dreaming', 'yawning', 'stretching', 'exercising', 'jogging', 'sprinting', 'marathoning',
+            'lifting', 'pushing', 'pulling', 'carrying', 'dragging', 'throwing', 'catching', 'kicking',
+            'punching', 'slapping', 'hugging', 'kissing', 'waving', 'pointing', 'gesturing', 'nodding',
+            'shaking', 'trembling', 'shivering', 'sweating', 'breathing', 'sighing', 'gasping', 'panting',
+            'eating', 'drinking', 'chewing', 'swallowing', 'tasting', 'smelling', 'touching', 'feeling',
+            'seeing', 'watching', 'observing', 'staring', 'glancing', 'peeking', 'squinting', 'blinking',
+            'hearing', 'listening', 'whispering', 'shouting', 'screaming', 'talking', 'chatting', 'gossiping',
+            'laughing', 'giggling', 'chuckling', 'smiling', 'grinning', 'frowning', 'crying', 'weeping',
+            'thinking', 'pondering', 'wondering', 'contemplating', 'meditating', 'concentrating', 'focusing', 'daydreaming',
+            'learning', 'studying', 'teaching', 'explaining', 'demonstrating', 'practicing', 'rehearsing', 'performing',
+            'acting', 'pretending', 'imitating', 'mimicking', 'copying', 'duplicating', 'reproducing', 'creating',
+            'inventing', 'discovering', 'exploring', 'investigating', 'researching', 'experimenting', 'testing', 'analyzing',
+            'calculating', 'computing', 'programming', 'coding', 'debugging', 'installing', 'downloading', 'uploading',
+            'browsing', 'scrolling', 'clicking', 'typing', 'texting', 'emailing', 'messaging', 'calling',
+            'shopping', 'buying', 'selling', 'trading', 'exchanging', 'bargaining', 'negotiating', 'discussing',
+            'arguing', 'debating', 'fighting', 'wrestling', 'boxing', 'fencing', 'dueling', 'competing',
+            'racing', 'chasing', 'pursuing', 'following', 'tracking', 'hunting', 'searching', 'seeking',
+            'finding', 'discovering', 'locating', 'identifying', 'recognizing', 'remembering', 'forgetting', 'recalling',
+            'organizing', 'arranging', 'sorting', 'categorizing', 'classifying', 'labeling', 'marking', 'tagging',
+            'collecting', 'gathering', 'accumulating', 'storing', 'saving', 'preserving', 'protecting', 'guarding',
+            'defending', 'attacking', 'invading', 'conquering', 'occupying', 'retreating', 'escaping', 'fleeing',
+            'hiding', 'seeking', 'revealing', 'exposing', 'concealing', 'covering', 'uncovering', 'wrapping',
+            'unwrapping', 'opening', 'closing', 'locking', 'unlocking', 'entering', 'exiting', 'arriving',
+            'departing', 'leaving', 'returning', 'visiting', 'touring', 'traveling', 'journeying', 'wandering',
+            'roaming', 'strolling', 'marching', 'parading', 'processing', 'advancing', 'retreating', 'circling',
+            'spinning', 'rotating', 'turning', 'twisting', 'bending', 'stretching', 'expanding', 'contracting',
+            'growing', 'shrinking', 'enlarging', 'reducing', 'increasing', 'decreasing', 'multiplying', 'dividing',
+            'adding', 'subtracting', 'counting', 'measuring', 'weighing', 'comparing', 'contrasting', 'matching',
+            'connecting', 'disconnecting', 'linking', 'unlinking', 'joining', 'separating', 'combining', 'mixing',
+            'blending', 'merging', 'splitting', 'dividing', 'cutting', 'slicing', 'chopping', 'dicing',
+            'grinding', 'crushing', 'smashing', 'pounding', 'hammering', 'nailing', 'screwing', 'drilling',
+            'sawing', 'sanding', 'filing', 'sharpening', 'dulling', 'smoothing', 'roughening', 'texturing',
+            'coloring', 'bleaching', 'dyeing', 'staining', 'printing', 'stamping', 'marking', 'signing',
+            'writing', 'typing', 'scribbling', 'doodling', 'sketching', 'outlining', 'tracing', 'copying',
+            'erasing', 'deleting', 'removing', 'eliminating', 'destroying', 'demolishing', 'wrecking', 'ruining',
+            'damaging', 'harming', 'injuring', 'healing', 'treating', 'curing', 'medicating', 'nursing',
+            'caring', 'nurturing', 'raising', 'growing', 'developing', 'evolving', 'changing', 'transforming',
+            'converting', 'translating', 'interpreting', 'explaining', 'clarifying', 'simplifying', 'complicating', 'confusing',
+            'puzzling', 'solving', 'resolving', 'settling', 'deciding', 'choosing', 'selecting', 'picking',
+            'rejecting', 'accepting', 'approving', 'disapproving', 'agreeing', 'disagreeing', 'consenting', 'refusing',
+            'permitting', 'forbidding', 'allowing', 'preventing', 'enabling', 'disabling', 'activating', 'deactivating',
+            'starting', 'beginning', 'initiating', 'launching', 'stopping', 'ending', 'finishing', 'completing',
+            'accomplishing', 'achieving', 'succeeding', 'failing', 'winning', 'losing', 'conquering', 'surrendering',
+            'celebrating', 'mourning', 'grieving', 'rejoicing', 'cheering', 'applauding', 'clapping', 'whistling',
+            'humming', 'buzzing', 'ringing', 'chiming', 'tolling', 'echoing', 'reverberating', 'resonating',
+            'vibrating', 'oscillating', 'pulsating', 'throbbing', 'beating', 'thumping', 'knocking', 'tapping',
+            'clicking', 'snapping', 'cracking', 'popping', 'bursting', 'exploding', 'imploding', 'collapsing',
+            'falling', 'dropping', 'tumbling', 'rolling', 'sliding', 'slipping', 'skidding', 'gliding',
+            'floating', 'drifting', 'flowing', 'streaming', 'rushing', 'gushing', 'pouring', 'dripping',
+            'leaking', 'seeping', 'oozing', 'bubbling', 'frothing', 'foaming', 'fizzing', 'sparkling',
+            'glittering', 'shimmering', 'gleaming', 'glowing', 'shining', 'radiating', 'emitting', 'reflecting',
+            'absorbing', 'consuming', 'devouring', 'digesting', 'processing', 'manufacturing', 'producing', 'generating',
+            'creating', 'making', 'forming', 'shaping', 'molding', 'sculpting', 'crafting', 'designing',
+            'planning', 'scheming', 'plotting', 'conspiring', 'strategizing', 'organizing', 'coordinating', 'managing',
+            'supervising', 'overseeing', 'monitoring', 'observing', 'surveying', 'inspecting', 'examining', 'checking',
+            'verifying', 'confirming', 'validating', 'authenticating', 'authorizing', 'certifying', 'licensing', 'registering',
+            'documenting', 'recording', 'logging', 'tracking', 'tracing', 'following', 'shadowing', 'stalking',
+            'pursuing', 'chasing', 'hunting', 'seeking', 'searching', 'scouting', 'exploring', 'investigating'
+        ];
+
         function showRandomAdverb() {
             const adverb = adverbs[Math.floor(Math.random() * adverbs.length)];
+            const verb = verbs[Math.floor(Math.random() * verbs.length)];
+            const phrase = `${adverb} ${verb}`;
             const element = document.createElement('div');
             element.className = 'random-adverb';
-            element.textContent = adverb;
+            element.textContent = phrase;
             
             // Random position within viewport bounds
             const maxWidth = window.innerWidth - 150; // account for word width
