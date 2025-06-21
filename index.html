@@ -72,20 +72,19 @@
             }
         }
 
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0.3;
+        .random-adverb {
+            position: fixed;
+            font-size: 1.5rem;
+            font-weight: 300;
             color: #64748b;
-            animation: bounce 2s infinite;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
+        .random-adverb.fade-in {
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -96,11 +95,6 @@
         <p>I'm building some stuff for the heck of it</p>
     </div>
 
-    <div class="scroll-indicator">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 5v14M5 12l7 7 7-7"/>
-        </svg>
-    </div>
 
     <script>
         document.addEventListener('mousemove', (e) => {
@@ -109,8 +103,8 @@
             const x = e.clientX / window.innerWidth;
             const y = e.clientY / window.innerHeight;
             
-            const xOffset = (x - 0.5) * 10;
-            const yOffset = (y - 0.5) * 10;
+            const xOffset = (x - 0.5) * 25;
+            const yOffset = (y - 0.5) * 25;
             
             document.body.style.setProperty('--grid-x', `${xOffset}px`);
             document.body.style.setProperty('--grid-y', `${yOffset}px`);
@@ -128,6 +122,143 @@
                 }
             </style>
         `);
+
+        // Random adverb system
+        const adverbs = [
+            'quietly', 'boldly', 'mysteriously', 'gracefully', 'suddenly',
+            'smoothly', 'carefully', 'playfully', 'gently', 'swiftly',
+            'cleverly', 'softly', 'brightly', 'calmly', 'freely',
+            'warmly', 'lightly', 'deeply', 'slowly', 'quickly',
+            'silently', 'naturally', 'perfectly', 'simply', 'truly',
+            'elegantly', 'thoughtfully', 'precisely', 'dramatically', 'tenderly',
+            'fiercely', 'delicately', 'rapidly', 'peacefully', 'powerfully',
+            'beautifully', 'creatively', 'passionately', 'wisely', 'lovingly',
+            'intensely', 'genuinely', 'curiously', 'adventurously', 'mindfully',
+            'enthusiastically', 'artistically', 'harmoniously', 'effortlessly', 'vividly',
+            'brilliantly', 'serenely', 'dynamically', 'authentically', 'graciously',
+            'magically', 'whimsically', 'dreamily', 'mysteriously', 'enchantingly',
+            'radiantly', 'melodiously', 'poetically', 'rhythmically', 'musically',
+            'spiritually', 'emotionally', 'intellectually', 'intuitively', 'instinctively',
+            'compassionately', 'generously', 'kindly', 'patiently', 'optimistically',
+            'cheerfully', 'joyfully', 'blissfully', 'contentedly', 'peacefully',
+            'confidently', 'courageously', 'bravely', 'fearlessly', 'determinedly',
+            'persistently', 'steadily', 'consistently', 'reliably', 'faithfully',
+            'honestly', 'transparently', 'openly', 'directly', 'straightforwardly',
+            'clearly', 'distinctly', 'sharply', 'precisely', 'accurately',
+            'methodically', 'systematically', 'logically', 'rationally', 'analytically',
+            'scientifically', 'technically', 'professionally', 'expertly', 'skillfully',
+            'artfully', 'masterfully', 'flawlessly', 'impeccably', 'excellently',
+            'superbly', 'magnificently', 'splendidly', 'wonderfully', 'marvelously',
+            'amazingly', 'incredibly', 'remarkably', 'extraordinarily', 'exceptionally',
+            'uniquely', 'distinctively', 'originally', 'innovatively', 'creatively',
+            'imaginatively', 'inventively', 'resourcefully', 'adaptively', 'flexibly',
+            'spontaneously', 'impulsively', 'instinctively', 'naturally', 'organically',
+            'holistically', 'comprehensively', 'thoroughly', 'completely', 'entirely',
+            'absolutely', 'totally', 'utterly', 'wholly', 'fully',
+            'partially', 'moderately', 'slightly', 'barely', 'hardly',
+            'scarcely', 'rarely', 'occasionally', 'sometimes', 'frequently',
+            'regularly', 'consistently', 'constantly', 'continuously', 'perpetually',
+            'eternally', 'infinitely', 'endlessly', 'timelessly', 'momentarily',
+            'temporarily', 'briefly', 'instantly', 'immediately', 'promptly',
+            'swiftly', 'rapidly', 'speedily', 'hastily', 'urgently',
+            'leisurely', 'gradually', 'progressively', 'steadily', 'incrementally',
+            'exponentially', 'dramatically', 'significantly', 'substantially', 'considerably',
+            'notably', 'remarkably', 'surprisingly', 'unexpectedly', 'suddenly',
+            'abruptly', 'sharply', 'drastically', 'radically', 'fundamentally',
+            'essentially', 'basically', 'primarily', 'mainly', 'chiefly',
+            'principally', 'predominantly', 'largely', 'mostly', 'generally',
+            'typically', 'usually', 'commonly', 'ordinarily', 'normally',
+            'regularly', 'routinely', 'habitually', 'traditionally', 'conventionally',
+            'formally', 'officially', 'legally', 'legitimately', 'rightfully',
+            'properly', 'appropriately', 'suitably', 'fittingly', 'accordingly',
+            'consequently', 'therefore', 'thus', 'hence', 'subsequently',
+            'eventually', 'ultimately', 'finally', 'lastly', 'conclusively',
+            'definitely', 'certainly', 'surely', 'undoubtedly', 'unquestionably',
+            'indubitably', 'obviously', 'clearly', 'evidently', 'apparently',
+            'seemingly', 'presumably', 'supposedly', 'allegedly', 'reportedly',
+            'theoretically', 'hypothetically', 'potentially', 'possibly', 'probably',
+            'likely', 'conceivably', 'feasibly', 'reasonably', 'logically',
+            'rationally', 'sensibly', 'wisely', 'intelligently', 'cleverly',
+            'brilliantly', 'ingeniously', 'creatively', 'imaginatively', 'innovatively',
+            'originally', 'uniquely', 'distinctively', 'characteristically', 'typically',
+            'specifically', 'particularly', 'especially', 'notably', 'remarkably',
+            'exceptionally', 'extraordinarily', 'incredibly', 'amazingly', 'surprisingly',
+            'astonishingly', 'stunningly', 'breathtakingly', 'spectacularly', 'magnificently',
+            'gloriously', 'splendidly', 'wonderfully', 'marvelously', 'fantastically',
+            'fabulously', 'tremendously', 'enormously', 'immensely', 'vastly',
+            'hugely', 'massively', 'extensively', 'broadly', 'widely',
+            'globally', 'universally', 'internationally', 'nationally', 'locally',
+            'regionally', 'domestically', 'internally', 'externally', 'publicly',
+            'privately', 'personally', 'individually', 'collectively', 'jointly',
+            'mutually', 'reciprocally', 'correspondingly', 'similarly', 'likewise',
+            'comparably', 'equally', 'evenly', 'fairly', 'justly',
+            'rightfully', 'deservedly', 'appropriately', 'fittingly', 'suitably',
+            'ideally', 'perfectly', 'flawlessly', 'impeccably', 'excellently',
+            'admirably', 'commendably', 'praiseworthy', 'respectfully', 'honorably',
+            'nobly', 'dignifiedly', 'gracefully', 'elegantly', 'stylishly',
+            'fashionably', 'tastefully', 'aesthetically', 'artistically', 'creatively',
+            'expressively', 'emotionally', 'passionately', 'intensely', 'deeply',
+            'profoundly', 'meaningfully', 'significantly', 'importantly', 'critically',
+            'crucially', 'vitally', 'essentially', 'fundamentally', 'basically',
+            'simply', 'plainly', 'straightforwardly', 'directly', 'honestly',
+            'truthfully', 'sincerely', 'genuinely', 'authentically', 'realistically',
+            'practically', 'pragmatically', 'sensibly', 'reasonably', 'logically',
+            'systematically', 'methodically', 'strategically', 'tactically', 'diplomatically',
+            'politically', 'socially', 'culturally', 'historically', 'traditionally',
+            'modernly', 'contemporarily', 'currently', 'presently', 'recently',
+            'lately', 'previously', 'formerly', 'originally', 'initially',
+            'firstly', 'secondly', 'thirdly', 'finally', 'lastly',
+            'additionally', 'furthermore', 'moreover', 'besides', 'also',
+            'too', 'as well', 'likewise', 'similarly', 'correspondingly',
+            'accordingly', 'consequently', 'therefore', 'thus', 'hence',
+            'nevertheless', 'nonetheless', 'however', 'still', 'yet',
+            'though', 'although', 'despite', 'regardless', 'anyway',
+            'anyhow', 'somehow', 'somewhere', 'anywhere', 'everywhere',
+            'nowhere', 'elsewhere', 'here', 'there', 'where',
+            'when', 'whenever', 'while', 'meanwhile', 'simultaneously',
+            'concurrently', 'together', 'separately', 'apart', 'alone',
+            'independently', 'autonomously', 'freely', 'voluntarily', 'willingly',
+            'eagerly', 'enthusiastically', 'excitedly', 'passionately', 'zealously',
+            'fervently', 'ardently', 'devotedly', 'loyally', 'faithfully',
+            'dutifully', 'responsibly', 'conscientiously', 'diligently', 'industriously',
+            'tirelessly', 'relentlessly', 'persistently', 'tenaciously', 'stubbornly',
+            'determinedly', 'resolutely', 'firmly', 'steadfastly', 'unwavering'
+        ];
+
+        function showRandomAdverb() {
+            const adverb = adverbs[Math.floor(Math.random() * adverbs.length)];
+            const element = document.createElement('div');
+            element.className = 'random-adverb';
+            element.textContent = adverb;
+            
+            // Random position on screen
+            const x = Math.random() * (window.innerWidth - 200) + 100;
+            const y = Math.random() * (window.innerHeight - 100) + 50;
+            element.style.left = x + 'px';
+            element.style.top = y + 'px';
+            
+            document.body.appendChild(element);
+            
+            // Fade in
+            setTimeout(() => element.classList.add('fade-in'), 50);
+            
+            // Fade out and remove
+            setTimeout(() => {
+                element.classList.remove('fade-in');
+                setTimeout(() => element.remove(), 1500);
+            }, 1500);
+        }
+
+        function scheduleNextAdverb() {
+            const delay = (Math.random() * 80 + 10) * 1000; // 10-90 seconds
+            setTimeout(() => {
+                showRandomAdverb();
+                scheduleNextAdverb();
+            }, delay);
+        }
+
+        // Start the adverb system
+        scheduleNextAdverb();
     </script>
 </body>
 </html>
